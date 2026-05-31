@@ -1,0 +1,530 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+  <meta charset="UTF-8">
+
+  <title>Nutrition Page</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- Bootstrap -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+  <!-- INTER FONT -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <style>
+
+    body {
+      overflow-x: hidden;
+      min-height: 100vh;
+      background: #ffffff;
+      font-family: 'Inter', sans-serif;
+    }
+
+    :root {
+      --primary: #2DD4BF;
+      --dark: #0F766E;
+      --glass: rgba(245, 235, 220, 0.55);
+      --border: rgba(180, 150, 120, 0.45);
+      --text: #18443F;
+
+      --protein: #2DD4BF;
+      --carbs: #FBBF24;
+      --water: #60A5FA;
+    }
+
+    
+   .glass {
+
+  background: var(--glass);
+
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+
+  /* DARKER BORDER */
+  border: 1.5px solid rgba(180, 150, 120, 0.45);
+
+  border-radius: 20px;
+
+  /* STRONGER SHADOW */
+  box-shadow: 
+    0 8px 25px rgba(0,0,0,0.06),
+    inset 0 1px 0 rgba(255,255,255,0.25);
+
+  transition: 0.25s ease;
+}
+
+
+
+    .navbar {
+      padding: 14px 20px;
+      background: var(--dark) !important;
+    }
+
+    .navbar-brand {
+      color: white !important;
+      font-weight: bold;
+      font-family: 'Inter', sans-serif;
+      font-size: 22px;
+    }
+
+    .menu-btn {
+      border: none;
+      background: transparent;
+      color: white;
+      font-size: 24px;
+    }
+
+    .custom-menu {
+      position: fixed;
+      top: 70px;
+      right: 20px;
+      width: 220px;
+      background: var(--glass);
+      backdrop-filter: blur(16px);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 12px;
+      display: none;
+      z-index: 9999;
+    }
+
+    .custom-menu a,
+    .custom-menu button {
+      display: block;
+      width: 100%;
+      padding: 12px;
+      border-radius: 10px;
+      color: var(--dark);
+      text-decoration: none;
+      font-weight: 600;
+      border: none;
+      background: transparent;
+    }
+
+    .custom-menu a:hover,
+    .custom-menu button:hover {
+      background: rgba(45,212,191,0.20);
+    }
+
+    .nutrition-title {
+      text-align: center;
+      color: var(--dark);
+      font-weight: 800;
+      font-size: 37px;
+      margin-bottom: 30px;
+    }
+
+    .card {
+
+  border: 1.5px solid rgba(180, 150, 120, 0.45) !important;
+
+  border-radius: 20px;
+
+ 
+}
+
+    .progress {
+      height: 22px;
+      border-radius: 20px;
+      background: rgba(245, 235, 220, 0.5);
+      overflow: hidden;
+    }
+
+    .progress-bar {
+      font-weight: 700;
+    }
+
+    .protein-bar { background: var(--protein) !important; }
+    .carb-bar { background: var(--carbs) !important; }
+    .water-bar { background: var(--water) !important; }
+
+    h5 { color: var(--dark); font-weight: 700; }
+
+    .text-muted { color: #5f7b76 !important; }
+
+    .footer {
+      background: var(--dark);
+      color: white;
+      margin-top: 60px;
+      padding: 35px 20px;
+    }
+
+    .footer-container {
+      max-width: 1100px;
+      margin: auto;
+      text-align: center;
+    }
+
+    .footer-title {
+      font-size: 20px;
+      font-weight: 800;
+      margin-bottom: 10px;
+    }
+
+    .footer-text {
+      font-size: 14px;
+      opacity: 0.8;
+      max-width: 600px;
+      margin: auto;
+    }
+
+    .footer-bottom {
+      margin-top: 18px;
+      font-size: 13px;
+      opacity: 0.6;
+      border-top: 1px solid rgba(255,255,255,0.2);
+      padding-top: 15px;
+    }
+
+    /* =========================
+       AI COACH (NEW)
+    ========================== */
+
+    .ai-coach {
+      position: fixed;
+      bottom: 25px;
+      right: 25px;
+      width: 280px;
+      background: rgba(255,255,255,0.92);
+      border: 1px solid rgba(0,0,0,0.08);
+      border-radius: 18px;
+      padding: 15px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.12);
+      backdrop-filter: blur(14px);
+      z-index: 99999;
+
+      transform: translateY(30px);
+      opacity: 0;
+      transition: 0.4s ease;
+    }
+
+    .ai-coach.show {
+      transform: translateY(0);
+      opacity: 1;
+    }
+
+    .ai-coach-header {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 8px;
+    }
+
+    .ai-coach-title {
+      font-weight: 800;
+      color: var(--dark);
+      font-size: 14px;
+    }
+
+    .ai-coach-close {
+      border: none;
+      background: transparent;
+      cursor: pointer;
+    }
+
+    .ai-coach-text {
+      font-size: 13px;
+      color: #4b5e5a;
+      line-height: 1.5;
+    }
+
+    .ai-badge {
+      display: inline-block;
+      margin-top: 8px;
+      font-size: 11px;
+      padding: 4px 10px;
+      border-radius: 20px;
+      background: rgba(45,212,191,0.15);
+      color: var(--dark);
+      font-weight: 600;
+    }
+
+.mission-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 12px;
+  border-radius: 12px;
+  margin-bottom: 10px;
+  background: rgba(15,118,110,0.06);
+  font-weight: 600;
+  color: var(--dark);
+}
+
+.mission-done {
+  text-decoration: line-through;
+  opacity: 0.6;
+}
+
+.badge-done {
+  background: #2DD4BF;
+  color: white;
+  font-size: 12px;
+  padding: 4px 10px;
+  border-radius: 20px;
+}
+
+  </style>
+
+</head>
+
+<body class="bg-light">
+
+<!-- NAVBAR (UNCHANGED) -->
+<nav class="navbar navbar-dark">
+  <div class="container-fluid">
+    <a class="navbar-brand">Meal Tracker</a>
+    <button class="menu-btn" onclick="toggleMenu()">
+      <i class="fa-solid fa-bars"></i>
+    </button>
+  </div>
+</nav>
+
+<!-- MENU (UNCHANGED) -->
+<div class="custom-menu" id="menuBox">
+  <a href="home.html"><i class="fa-solid fa-house me-2"></i> Home</a>
+  <a href="meals.html"><i class="fa-solid fa-utensils me-2"></i> Meals</a>
+  <a href="nutrition.html"><i class="fa-solid fa-chart-simple me-2"></i> Nutrition</a>
+  <hr>
+  <button onclick="logout()">
+    <i class="fa-solid fa-right-from-bracket me-2"></i> Logout
+  </button>
+</div>
+
+<!-- CONTENT -->
+<div class="container mt-4">
+
+  <h1 class="nutrition-title">Nutrition Summary</h1>
+
+  <div class="card glass p-4 mb-4">
+    <div class="d-flex justify-content-between mb-2">
+      <h5>Protein Intake</h5>
+      <h5 id="proteinText">0g</h5>
+    </div>
+    <div class="progress">
+      <div id="proteinBar" class="progress-bar protein-bar" style="width:0%">0%</div>
+    </div>
+    <p class="mt-3 text-muted mb-0">Daily Goal: 120g Protein</p>
+  </div>
+
+  <div class="card glass p-4 mb-4">
+    <div class="d-flex justify-content-between mb-2">
+      <h5>Carbohydrates</h5>
+      <h5 id="carbText">0g</h5>
+    </div>
+    <div class="progress">
+      <div id="carbBar" class="progress-bar carb-bar" style="width:0%">0%</div>
+    </div>
+    <p class="mt-3 text-muted mb-0">Daily Goal: 250g Carbohydrates</p>
+  </div>
+
+  <div class="card glass p-4 mb-5">
+    <div class="d-flex justify-content-between mb-2">
+      <h5>Water Intake</h5>
+      <h5 id="waterText">0L</h5>
+    </div>
+    <div class="progress">
+      <div id="waterBar" class="progress-bar water-bar" style="width:0%">0%</div>
+    </div>
+    <p class="mt-3 text-muted mb-0">Daily Goal: 3 Liters Water</p>
+  </div>
+
+<div class="card glass p-4 mb-4">
+
+  <h5 class="mb-3">Daily Missions</h5>
+
+  <div id="missionsList"></div>
+
+</div>
+
+</div>
+
+<!-- AI COACH POPUP -->
+<div class="ai-coach" id="aiCoach">
+  <div class="ai-coach-header">
+    <div class="ai-coach-title">AI Coach</div>
+    <button class="ai-coach-close" onclick="closeCoach()">✕</button>
+  </div>
+
+  <div class="ai-coach-text" id="coachText">
+    Analyzing your nutrition...
+  </div>
+
+  <div class="ai-badge">Smart Insight</div>
+</div>
+
+<!-- FOOTER (UNCHANGED) -->
+<footer class="footer">
+  <div class="footer-container">
+    <div class="footer-title">Meal Tracker</div>
+    <div class="footer-text">
+      Track your meals, calories, and daily health progress easily. Stay consistent and build better habits every day.
+    </div>
+    <div class="footer-bottom">© 2026 Meal Tracker. All rights reserved.</div>
+  </div>
+</footer>
+
+<script>
+
+function toggleMenu() {
+  let menu = document.getElementById("menuBox");
+  menu.style.display = (menu.style.display === "block") ? "none" : "block";
+}
+
+window.onclick = function(event) {
+  if (!event.target.closest('.menu-btn') &&
+      !event.target.closest('.custom-menu')) {
+    document.getElementById("menuBox").style.display = "none";
+  }
+}
+
+function logout() {
+  localStorage.removeItem("loggedIn");
+  window.location.href = "index.html";
+}
+
+/* AI COACH */
+function showCoach(msg) {
+  document.getElementById("coachText").innerText = msg;
+  setTimeout(() => {
+    document.getElementById("aiCoach").classList.add("show");
+  }, 500);
+}
+
+function closeCoach() {
+  document.getElementById("aiCoach").classList.remove("show");
+}
+
+function generateCoach(cal, protein, carbs, water) {
+
+  // LOW ENERGY MODE
+  if (cal < 800) {
+    return "Listen. You are under-eating. That’s not discipline — that’s damage. Eat a proper meal with protein and carbs now.";
+  }
+
+  // LOW PROTEIN
+  if (protein < 60) {
+    return "Protein is too low today. No excuses. Add chicken, eggs, tuna, or yogurt in your next meal.";
+  }
+
+  // LOW WATER
+  if (water < 1.5) {
+    return "You’re dehydrated. Fix it now. Drink water before your next meal. Hydration is non-negotiable.";
+  }
+
+  // OVER EATING
+  if (cal > 2200) {
+    return "You’re pushing calories high today. That’s fine — if it’s controlled. Balance your next meals.";
+  }
+
+  // GOOD DAY
+  if (protein >= 90 && water >= 2) {
+    return "Solid work today. Protein is strong, hydration is good. This is how progress is built. Keep going.";
+  }
+
+  // DEFAULT COACH MODE
+  return "You’re doing okay — but okay doesn’t build a strong body. Push protein and stay consistent.";
+}
+
+window.onload = updateNutrition;
+
+
+
+function loadMissions(cal, protein, water) {
+
+  // GET DAILY GOAL FROM LOCAL STORAGE
+  // (same goal used in meals page)
+  let dailyGoal = Number(localStorage.getItem("dailyGoal")) || 2200;
+
+  let missions = [
+    {
+      text: "Drink 3L water",
+      done: water >= 3
+    },
+    {
+      text: "Hit 120g protein",
+      done: protein >= 120
+    },
+
+    // UPDATED CALORIE MISSION
+    {
+      text: `Hit ${dailyGoal} calorie goal`,
+      done: cal >= dailyGoal
+    },
+
+    {
+      text: "Eat balanced meals",
+      done: protein >= 80 && water >= 2
+    }
+  ];
+
+  let html = "";
+
+  missions.forEach(m => {
+    html += `
+      <div class="mission-item ${m.done ? 'mission-done' : ''}">
+        <span>${m.text}</span>
+        ${m.done
+          ? '<span class="badge-done">Done</span>'
+          : '<span>Pending</span>'}
+      </div>
+    `;
+  });
+
+  document.getElementById("missionsList").innerHTML = html;
+}
+
+
+
+function updateNutrition() {
+
+  let meals = JSON.parse(localStorage.getItem("meals")) || [];
+
+  let totalCalories = 0;
+  let totalWater = 0;
+
+  meals.forEach(m => {
+    totalCalories += Number(m.calories);
+    totalWater += Number(m.water || 0);
+  });
+
+  let protein = Math.round((totalCalories * 0.30) / 4);
+  let carbs = Math.round((totalCalories * 0.50) / 4);
+
+  let proteinGoal = 120;
+  let carbGoal = 250;
+  let waterGoal = 3;
+
+  let proteinPercent = Math.min((protein / proteinGoal) * 100, 100);
+  let carbPercent = Math.min((carbs / carbGoal) * 100, 100);
+  let waterPercent = Math.min((totalWater / waterGoal) * 100, 100);
+
+  document.getElementById("proteinText").innerText = protein + "g";
+  document.getElementById("proteinBar").style.width = proteinPercent + "%";
+  document.getElementById("proteinBar").innerText = Math.round(proteinPercent) + "%";
+
+  document.getElementById("carbText").innerText = carbs + "g";
+  document.getElementById("carbBar").style.width = carbPercent + "%";
+  document.getElementById("carbBar").innerText = Math.round(carbPercent) + "%";
+
+  document.getElementById("waterText").innerText = totalWater + "L";
+  document.getElementById("waterBar").style.width = waterPercent + "%";
+  document.getElementById("waterBar").innerText = Math.round(waterPercent) + "%";
+
+  loadMissions(totalCalories, protein, totalWater);
+
+  // AI COACH TRIGGER
+  let msg = generateCoach(totalCalories, protein, carbs, totalWater);
+  showCoach(msg);
+}
+
+</script>
+
+</body>
+</html> 

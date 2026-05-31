@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Meal Tracker Login</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+<style>
+
+/* RESET */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* THEME */
+:root {
+  --dark: #0F766E;
+  --primary: #2DD4BF;
+  --border: rgba(15, 118, 110, 0.18);
+}
+
+/* BACKGROUND */
+body {
+  font-family: "Inter", sans-serif;
+  min-height: 100vh;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background: #ffffff;
+  overflow: hidden;
+  position: relative;
+}
+
+
+
+/* SOFT GLOW */
+body::after {
+  content: "";
+  position: absolute;
+  width: 500px;
+  height: 500px;
+  background: rgba(45,212,191,0.12);
+  border-radius: 50%;
+  filter: blur(120px);
+  top: -150px;
+  right: -150px;
+  z-index: 0;
+}
+
+/* LOGIN CARD (PREMIUM GLASS) */
+.login-card {
+  position: relative;
+  z-index: 2;
+
+  width: 100%;
+  max-width: 440px;
+
+  padding: 42px 34px;
+
+  border-radius: 28px;
+
+  background: rgba(255,255,255,0.85);
+  backdrop-filter: blur(18px);
+
+  border: 1px solid rgba(15,118,110,0.12);
+
+  box-shadow: 0 25px 60px rgba(0,0,0,0.10);
+}
+
+/* ICON */
+.logo-box {
+  width: 80px;
+  height: 80px;
+  margin: auto;
+  margin-bottom: 18px;
+
+  border-radius: 18px;
+  background: rgba(45,212,191,0.12);
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.logo-box i {
+  font-size: 34px;
+  color: var(--dark);
+}
+
+/* TITLE */
+.login-title {
+  text-align: center;
+  font-size: 30px;
+  font-weight: 800;
+  color: var(--dark);
+}
+
+.login-subtitle {
+  text-align: center;
+  font-size: 14px;
+  color: #6b7c7a;
+  margin-bottom: 22px;
+}
+
+/* DEMO BOX */
+.test-box {
+  background: rgba(45,212,191,0.08);
+  border: 1px solid rgba(45,212,191,0.15);
+  border-radius: 14px;
+  padding: 12px;
+  font-size: 13px;
+  margin-bottom: 18px;
+}
+
+/* ========================= */
+/*  FIX INPUTS (TRUE WHITE) */
+/* ========================= */
+
+.form-control {
+  height: 52px;
+
+  background: #ffffff !important;   /* FORCE WHITE */
+  border: 1px solid rgba(15,118,110,0.18) !important;
+
+  border-radius: 14px;
+
+  box-shadow: none !important;
+  outline: none !important;
+
+  padding-left: 14px;
+
+  margin-bottom: 14px;
+}
+
+/* REMOVE BLUE BOOTSTRAP FOCUS */
+.form-control:focus {
+  background: #ffffff !important;
+  border-color: var(--primary) !important;
+  box-shadow: none !important;
+}
+
+/* REMOVE AUTOFILL BLUE */
+input:-webkit-autofill {
+  -webkit-box-shadow: 0 0 0 1000px #ffffff inset !important;
+}
+
+/* BUTTON */
+.login-btn {
+  width: 100%;
+  height: 52px;
+
+  border: none;
+  border-radius: 14px;
+
+  background: linear-gradient(135deg, #0F766E, #14B8A6);
+  color: white;
+
+  font-weight: 700;
+}
+
+.login-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 25px rgba(20,184,166,0.25);
+}
+
+/* ERROR */
+.error-text {
+  text-align: center;
+  color: #ef4444;
+  font-weight: 600;
+  margin-bottom: 10px;
+}
+
+/* FOOTER */
+.bottom-text {
+  text-align: center;
+  margin-top: 15px;
+  font-size: 12px;
+  color: #7a8a88;
+}
+
+
+</style>
+
+</head>
+
+<body>
+
+<div class="login-card">
+
+  <div class="logo-box">
+    <i class="fa-solid fa-bowl-food"></i>
+  </div>
+
+  <h2 class="login-title">Meal Tracker</h2>
+
+  <p class="login-subtitle">
+    Track meals, calories & hydration with ease.
+  </p>
+
+  <div class="test-box">
+    <strong>Demo Account</strong><br>
+    mealuser / tracker123
+  </div>
+
+  <input type="text" id="username" class="form-control" placeholder="Username">
+  <input type="password" id="password" class="form-control" placeholder="Password">
+
+  <div id="error" class="error-text"></div>
+
+  <button class="login-btn" onclick="login()">Login</button>
+
+  <div class="bottom-text">© 2026 Meal Tracker. All rights reserved. </div>
+
+</div>
+
+<script>
+function login() {
+  let u = document.getElementById("username").value;
+  let p = document.getElementById("password").value;
+
+  if (u === "mealuser" && p === "tracker123") {
+    localStorage.setItem("loggedIn", "true");
+    window.location.href = "home.html";
+  } else {
+    document.getElementById("error").innerText = "Invalid login";
+  }
+}
+</script>
+
+</body>
+</html>
