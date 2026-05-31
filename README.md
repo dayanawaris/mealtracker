@@ -39,4 +39,5 @@ Password: tracker123
 * Bootstrap 5
 * Font Awesome
 * Google Fonts (Inter)
+* Chart.js
 
