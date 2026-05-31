@@ -5,7 +5,7 @@ Meal Tracker
 
 ## Project Description
 
-Meal Tracker is a web-based application that helps users record meals, monitor calorie intake, track hydration, and maintain healthy eating habits. It uses HTML, CSS, JavaScript, and Local Storage.
+Meal Tracker is a web-based application that helps users record meals, monitor calorie intake, track hydration, and maintain healthy eating habits. It uses HTML, CSS, JavaScript, Bootstrap 5 and Local Storage.
 
 ## Features Included
 
